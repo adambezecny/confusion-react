@@ -19,7 +19,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-function RenderComments({comments}) {
+function RenderComments({ comments, addComment, dishId }) {
     const commentsList = (
         <ul className="list-unstyled">{
             comments.map(comment => {
@@ -77,9 +77,9 @@ class DishDetail extends Component {
 
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
         // event.preventDefault();
-        this.toggleModal() //close modal after user clicks ok in alert window
+        // this.toggleModal() //close modal after user clicks ok in alert window
+        this.props.addComment(this.props.dish.id, values.rating, values.yourname, values.comment);        
     }
     
 
@@ -92,7 +92,6 @@ class DishDetail extends Component {
                 <div className="container">
                     <div className="row">
                         <Breadcrumb>
-    
                             <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
                         </Breadcrumb>
@@ -107,7 +106,9 @@ class DishDetail extends Component {
                         </div>
                         <div  className="col col-md m-1">
                             <h2>Comments</h2>
-                            <RenderComments comments={comments} />
+                            <RenderComments 
+                                comments={comments} 
+                            />
                             <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"></span> Submit Comment</Button>
                             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                                 <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>

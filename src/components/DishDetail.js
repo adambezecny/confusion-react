@@ -21,7 +21,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments }) {
     const commentsList = (
         <ul className="list-unstyled">{
             comments.map(comment => {
@@ -81,7 +81,7 @@ class DishDetail extends Component {
         console.log('Current State is: ' + JSON.stringify(values));
         // event.preventDefault();
         // this.toggleModal() //close modal after user clicks ok in alert window
-        this.props.addComment(this.props.dish.id, values.rating, values.yourname, values.comment);        
+        this.props.postComment(this.props.dish.id, values.rating, values.yourname, values.comment);        
     }
     
 
